@@ -2,6 +2,8 @@ from django.db import models
 from django.urls import reverse
 # User是一个自带的模型类，里面是用户的字段
 from django.contrib.auth.models import User
+from markdown import Markdown
+from django.utils.html import strip_tags
 
 class Category(models.Model):
     name = models.CharField(max_length=64)
@@ -30,6 +32,16 @@ class Post(models.Model):
 
     # 文章阅读量
     views = models.PositiveIntegerField(default=0)
+
+    #自动生成摘要 即复写save()函数
+    def save(self,*args,**kwargs):
+        if not self.excerpt:
+            md = Markdown(extensions=[
+                'markdown.extensions.extra',
+                'markdown.extensions.codehilite',
+            ])
+            self.excerpt = strip_tags(md.convert(self.body))[:32]
+        super().save(*args,**kwargs)
 
     def increase_views(self):
         self.views+=1
