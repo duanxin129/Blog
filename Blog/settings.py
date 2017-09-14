@@ -28,7 +28,16 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 
+
 # Application definition
+
+HAYSTACK_CONNECTIONS = {
+    'default': { 'ENGINE': 'myBlog.whoosh_cn_backend.WhooshEngine',
+                 'PATH': os.path.join(BASE_DIR, 'whoosh_index'), },
+            }
+HAYSTACK_SEARCH_RESULTS_PER_PAGE = 10
+HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
+
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -39,6 +48,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'myBlog',
     'comment',
+    'haystack',
 ]
 
 MIDDLEWARE = [
