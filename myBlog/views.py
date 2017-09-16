@@ -1,4 +1,4 @@
-from django.shortcuts import render,get_object_or_404
+from django.shortcuts import render,get_object_or_404,redirect
 from .models import Post,Category,Tag
 from markdown import markdown,Markdown
 from markdown.extensions.toc import TocExtension
@@ -169,3 +169,20 @@ class TagView(IndexView):
     def get_queryset(self):
         context = get_object_or_404(Tag,pk = self.kwargs.get('pk'))
         return super().get_queryset().filter(tag = context)
+
+
+from .forms import PostForm
+def report(request):
+
+    form = PostForm(request.POST)
+    return render(request,'myBlog/report_article.html',context={'form': form})
+
+def saveArticle(request):
+        if request.method == 'POST':
+            form = PostForm(request.POST)
+            if form.is_valid():
+                form.save()
+                return redirect('/')
+        else:
+            form = PostForm()
+        return render(request, 'myBlog/report_article.html', context={'form': form})

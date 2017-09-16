@@ -1,6 +1,7 @@
 from django import template
 from django.db.models.aggregates import Count
 from ..models import Post,Category,Tag
+from django.contrib.auth.models import User
 
 register = template.Library()
 
@@ -19,3 +20,7 @@ def get_categories():
 @register.simple_tag
 def get_tag():
     return Tag.objects.annotate(num_post = Count('post')).filter(num_post__gt=0)
+
+@register.simple_tag
+def get_author():
+    return User.objects.annotate(num_post = Count('post')).filter(num_post__gt=0)

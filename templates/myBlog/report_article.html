@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>发表文章</title>
+</head>
+<body>
+<div class="flex-center">
+    <div class="container">
+        <div class="flex-center">
+            <div class="unit-1-2 unit-1-on-mobile">
+                <h1><a href="{% url 'blog:index' %}">Django Blog</a></h1>
+                <h3>发文章</h3>
+                <form class="form" action="{% url 'blog:save' %}" method="post">
+                    {% csrf_token %}
+                    <table>
+                        <tr>
+                            <td>
+                                <lable for='id_title'>标题:</lable>
+                            </td>
+                            <td>{{ form.title }}</td>
+                            <td>{{ form.title.errors }}</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <lable for='id_author'>作者:</lable>
+                            </td>
+                            <td>{{ form.author }}</td>
+                            <td>{{ form.author.errors }}</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <lable for='id_body'>正文:</lable>
+                            </td>
+                            <td>{{ form.body }}</td>
+                            <td>{{ form.body.errors }}</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <lable for='id_category'>Category</lable>
+                            </td>
+                            <td>{{ form.category }}</td>
+                            <td>{{ form.category.errors }}</td>
+                        </tr>
+                        <tr>
+                            <td><input type="submit" value="发表"/></td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
