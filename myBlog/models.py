@@ -4,6 +4,9 @@ from django.urls import reverse
 from django.contrib.auth.models import User
 from markdown import Markdown
 from django.utils.html import strip_tags
+from sqlalchemy.orm import relationship
+from sqlalchemy.ext.declarative import declarative_base
+import django.db
 
 class Category(models.Model):
     name = models.CharField(max_length=64)
